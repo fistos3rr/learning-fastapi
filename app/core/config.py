@@ -1,17 +1,42 @@
 import logging
 import sys
 from functools import lru_cache
+from pydantic import (
+    PostgresDsn,
+    computed_field
+)
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    database_url: str = ""
-    debug: int = False
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_ignore_empty=True,
+        extra="ignore"
+    )
     
-    model_config = SettingsConfigDict(env_file=".env")
+    DEBUG: bool = False
+    
+    PG_HOST: str
+    PG_PORT: int = 5432
+    PG_USER: str
+    PG_PASSWORD: str = ""
+    PG_DB: str = ""
+    
+    @computed_field
+    @property
+    def PG_DATABASE_URI(self) -> PostgresDsn:
+        return PostgresDsn.build(
+            scheme="popostgresql+asyncpg",
+            username=self.PG_USER,
+            password=self.PG_PASSWORD,
+            host=self.PG_HOST,
+            port=self.PG_PORT,
+            path=self.PG_DB
+        )
 
 
 @lru_cache
-def get_settings() -> Settings:
+def settings() -> Settings:
     return Settings()
 
 LOGGING_CONFIG = {
