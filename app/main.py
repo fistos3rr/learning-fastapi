@@ -9,21 +9,16 @@ from sqlalchemy import text
 
 from app.routers import users
 from app.core.config import LOGGING_CONFIG, settings
-from app.db.database import Database
-from app.dependencies import get_db_session
+from app.db.database import sessionmanager, get_db_session
 
 logging.config.dictConfig(LOGGING_CONFIG)
 logger = logging.getLogger("app")
 
 @asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
-    db_instance = Database(
-        url=str(settings().PG_DATABASE_URI),
-        echo=True
-    )
-    app.state.db = db_instance
+async def lifespan(app: FastAPI):
     yield
-    await db_instance.close()
+    if sessionmanager._engine is not None:
+        await sessionmanager.close()
 
 app = FastAPI(lifespan=lifespan)
 

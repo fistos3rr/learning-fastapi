@@ -24,15 +24,15 @@ class Settings(BaseSettings):
     
     @computed_field
     @property
-    def PG_DATABASE_URI(self) -> PostgresDsn:
-        return PostgresDsn.build(
+    def PG_DATABASE_URI(self) -> str:
+        return str(PostgresDsn.build(
             scheme="postgresql+asyncpg",
             username=self.PG_USER,
             password=self.PG_PASSWORD,
             host=self.PG_HOST,
             port=self.PG_PORT,
             path=self.PG_DB
-        )
+        ))
 
 
 @lru_cache
