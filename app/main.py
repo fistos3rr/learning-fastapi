@@ -1,6 +1,15 @@
-from app.routers import users
+import logging.config
+from contextlib import asynccontextmanager
+from typing import AsyncGenerator
 
 from fastapi import FastAPI
+
+from app.routers import users
+from app.core.config import LOGGING_CONFIG
+
+
+logging.config.dictConfig(LOGGING_CONFIG)
+logger = logging.getLogger("app")
 
 app = FastAPI()
 
