@@ -5,11 +5,13 @@ from typing import AsyncGenerator
 from fastapi import FastAPI
 
 from app.routers import users
-from app.core.config import LOGGING_CONFIG
+from app.core.config import LOGGING_CONFIG, get_settings
 
+settings = get_settings()
 
 logging.config.dictConfig(LOGGING_CONFIG)
 logger = logging.getLogger("app")
+        
 
 app = FastAPI()
 
