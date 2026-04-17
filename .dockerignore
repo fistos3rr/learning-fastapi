@@ -1,0 +1,29 @@
+# python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+*.egg-info
+dist/
+build/
+.eggs/
+.mypy_cache/
+.pytest_cache/
+
+# venv
+.venv/
+
+# env and secrets
+.env
+
+# logs and temp
+app.log
+
+# docker
+.dockerignore
+Dockerfile*
+docker-compose*
+
+# ci/cd
+.git/
+.gitignore
