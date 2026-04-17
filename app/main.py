@@ -4,10 +4,7 @@ from typing import AsyncGenerator, Annotated
 
 from fastapi import FastAPI, Depends, HTTPException
 
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import text
-
-from app.routers import users
+from app.routers import users, health
 from app.core.config import LOGGING_CONFIG, settings
 from app.db.database import sessionmanager, get_db_session
 
@@ -22,15 +19,5 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-@app.get("/health")
-async def health_check(
-    db: Annotated[AsyncSession, Depends(get_db_session)]
-):
-    try:
-        result = await db.execute(text("SELECT version()"))
-        db_version = result.scalar()
-        return {"status": "healthy", "db_version": db_version}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"DB error: {str(e)}")
-    
+app.include_router(health.router)
 app.include_router(users.router)

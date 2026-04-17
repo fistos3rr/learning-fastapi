@@ -54,7 +54,7 @@ class DatabaseSessionManager:
             await session.close()
 
 sessionmanager = DatabaseSessionManager(settings().PG_DATABASE_URI, {"echo": settings().DEBUG})
-    
+
 async def get_db_session():
     async with sessionmanager.session() as session:
         yield session
