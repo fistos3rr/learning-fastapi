@@ -29,6 +29,20 @@ class Settings(BaseSettings):
                 path=self.PG_DB,
             )
         )
+    
+    @computed_field  # type: ignore [prop-decorator]
+    @property
+    def PG_SYNC_DATABASE_URI(self) -> str:
+        return str(
+            PostgresDsn.build(
+                scheme="postgresql",
+                username=self.PG_USER,
+                password=self.PG_PASSWORD,
+                host=self.PG_HOST,
+                port=self.PG_PORT,
+                path=self.PG_DB,
+            )
+        )
 
 
 @lru_cache
