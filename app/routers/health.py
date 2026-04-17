@@ -12,7 +12,9 @@ router = APIRouter(prefix="/health", tags=["health"])
 
 
 @router.get("/db")
-async def health_check(db: Annotated[AsyncSession, Depends(get_db_session)]):
+async def health_check(
+    db: Annotated[AsyncSession, Depends(get_db_session)],
+):
     try:
         result = await db.execute(text("SELECT version();"))
         db_version = result.scalars().one()

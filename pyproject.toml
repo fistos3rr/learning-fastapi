@@ -3,4 +3,4 @@ testpaths = ["tests"]
 
 [tool.ruff]
 target-version = "py313"
-line-length = 88
+line-length = 70
