@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     PG_PASSWORD: str = ""
     PG_DB: str = ""
 
-    @computed_field
+    @computed_field  # type: ignore [prop-decorator]
     @property
     def PG_DATABASE_URI(self) -> str:
         return str(
@@ -33,7 +33,7 @@ class Settings(BaseSettings):
 
 @lru_cache
 def settings() -> Settings:
-    return Settings()
+    return Settings()  # type: ignore [call-arg]
 
 
 LOGGING_CONFIG = {

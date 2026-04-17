@@ -1,5 +1,6 @@
 import logging.config
 from contextlib import asynccontextmanager
+from typing import AsyncGenerator
 
 from fastapi import FastAPI
 
@@ -12,7 +13,7 @@ logger = logging.getLogger("app")
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     yield
     if sessionmanager._engine is not None:
         await sessionmanager.close()
