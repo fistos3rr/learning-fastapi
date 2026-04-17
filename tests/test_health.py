@@ -1,8 +1,9 @@
 import pytest
 
+
 @pytest.mark.anyio
 async def test_health_endpoint(client):
-    response = await client.get("/health")
-    
+    response = await client.get("/health/db")
+
     assert response.status_code == 200
-    assert response.json().get('status') == 'healthy'
+    assert response.json().get("status") == "healthy"

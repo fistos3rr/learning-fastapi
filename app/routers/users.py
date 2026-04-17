@@ -1,27 +1,28 @@
 from fastapi import APIRouter
 
-router = APIRouter(
-    prefix="/users",
-    tags=["users"]
-)
+router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.post("/")
-async def create_user():
+async def create_user() -> None:
     pass
-    
+
+
 @router.get("/")
-async def read_users():
+async def read_users() -> None:
     pass
+
 
 @router.get("/{user_id}")
-async def read_user_by_id():
+async def read_user_by_id() -> None:
     pass
- 
+
+
 @router.patch("/{user_id}")
-async def update_user():
-    pass 
+async def update_user() -> None:
+    pass
+
 
 @router.delete("/{user_id}")
-async def delete_user_by_id():
+async def delete_user_by_id() -> None:
     pass
